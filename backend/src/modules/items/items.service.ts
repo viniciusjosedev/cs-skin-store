@@ -27,8 +27,16 @@ export class ItemsService {
       };
     }
 
-    if (filters.price) {
-      where.price = parseFloat(filters.price);
+    if (filters.priceUpper) {
+      where.price = {
+        gte: +filters.priceUpper,
+      };
+    }
+
+    if (filters.priceLower) {
+      where.price = {
+        lte: +filters.priceLower,
+      };
     }
 
     if (filters.category) {

@@ -8,7 +8,10 @@ export class ItemsQueryDto {
   float?: string;
 
   @IsOptional()
-  price?: string;
+  priceUpper?: string;
+
+  @IsOptional()
+  priceLower?: string;
 
   @IsOptional()
   category?: string;
