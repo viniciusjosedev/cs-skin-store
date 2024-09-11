@@ -1,0 +1,49 @@
+networks:
+  cs-skin-store-networking:
+    driver: bridge
+
+volumes:
+  mongo-data:
+
+services:
+  cs-skin-store-mongo:
+    build:
+      context: .
+      dockerfile: dockerfile-mongo
+      args:
+        MONGO_VERSION: 6
+    container_name: cs-skin-store-mongo
+    environment:  
+      MONGO_REPLICA_HOST: 127.0.0.1
+      MONGO_REPLICA_PORT: ${MONGO_PORT}
+
+      # Use "mongo" instead of "mongosh" before v5.0
+      MONGO_COMMAND: 'mongosh'
+    ports:
+      - "${MONGO_PORT}:${MONGO_PORT}"
+    restart: unless-stopped
+    healthcheck:
+      # Use "mongo" instead of "mongosh" before v5.0
+      test: ['CMD', 'mongosh', 'admin', '--port', '${MONGO_PORT}', '--eval', "db.adminCommand('ping').ok"]
+      interval: 5s
+      timeout: 2s
+      retries: 20
+    networks:
+      - cs-skin-store-networking
+    volumes:
+      - mongo-data:/data/db
+
+  cs-skin-store-app:
+    build:
+      context: .
+      dockerfile: dockerfile-app
+      target: ${NODE_ENV}
+    container_name: cs-skin-store-app
+    networks:
+      - cs-skin-store-networking
+    depends_on:
+      - cs-skin-store-mongo
+    volumes:
+      - .:/app
+    ports:
+      - "${NODE_PORT}:${NODE_PORT}"
