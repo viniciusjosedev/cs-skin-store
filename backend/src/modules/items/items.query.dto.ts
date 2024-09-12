@@ -5,7 +5,10 @@ export class ItemsQueryDto {
   name?: string;
 
   @IsOptional()
-  float?: string;
+  floatUpper?: string;
+
+  @IsOptional()
+  floatLower?: string;
 
   @IsOptional()
   priceUpper?: string;

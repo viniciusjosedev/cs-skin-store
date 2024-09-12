@@ -20,20 +20,31 @@ export class ItemsService {
       };
     }
 
-    if (filters.float) {
+    if (filters.floatUpper && filters.floatLower) {
       where.float = {
-        startsWith: filters.float,
-        mode: 'insensitive',
+        gte: filters.floatUpper,
+        lte: filters.floatLower,
+      };
+    } else if (filters.floatUpper) {
+      where.float = {
+        gte: filters.floatUpper,
+      };
+    } else if (filters.floatLower) {
+      where.float = {
+        lte: filters.floatLower,
       };
     }
 
-    if (filters.priceUpper) {
+    if (filters.priceUpper && filters.priceLower) {
+      where.price = {
+        gte: +filters.priceUpper,
+        lte: +filters.priceLower,
+      };
+    } else if (filters.priceUpper) {
       where.price = {
         gte: +filters.priceUpper,
       };
-    }
-
-    if (filters.priceLower) {
+    } else if (filters.priceLower) {
       where.price = {
         lte: +filters.priceLower,
       };
