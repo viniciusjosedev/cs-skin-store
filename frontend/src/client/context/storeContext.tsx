@@ -27,8 +27,6 @@ export const StoreProvider = ({ children }: React.PropsWithChildren) => {
 
   const { ref: lastItemRef, inView } = useInView();
 
-	console.log({pageNumber})
-
 	const handleChangeFilters = useCallback(({ name, value }: ChangeFilter) => {
 		if (name === 'float_min' || name === 'float_max') {				
 			if (Number(value) < 0 || Number(value) > 1) {
@@ -48,11 +46,25 @@ export const StoreProvider = ({ children }: React.PropsWithChildren) => {
 		setPageNumber(1);
 	}, [filters])
 
-	const handleFetchSkins = useCallback(async (params: Filters & {pageNumber: number}) => {
+	const handleFilersDTO = useCallback((params: Filters & { pageNumber: number }) => {
+		return {
+			name: params.name,
+			floatUpper: params.float_min ? parseFloat(params.float_min) : undefined,
+			floatLower: params.float_max ? parseFloat(params.float_max) : undefined,
+			priceUpper: params.price_min ? parseFloat(params.price_min) : undefined,
+			priceLower: params.price_max ? parseFloat(params.price_max) : undefined,
+			category: params.category,
+			orderColumn: params.orderColumn,
+			orderDirection: params.orderDirection,
+			pageNumber: params.pageNumber
+		}
+	}, []);
+
+	const handleFetchSkins = useCallback(async (params: Filters & { pageNumber: number }) => {
 		try {
 			setLoading(true);
 			const { data } = await api.get<{ items: Item[]; hasMore: boolean }>('/items', {
-				params
+				params: handleFilersDTO(params)
 			});
 
 			if (params.pageNumber === 1) {
@@ -73,7 +85,7 @@ export const StoreProvider = ({ children }: React.PropsWithChildren) => {
 		} finally {
 			setLoading(false);
 		}
-	}, []);
+	}, [handleFilersDTO]);
 
 	useEffect(() => {
 		const debounceFetch = setTimeout(() => {

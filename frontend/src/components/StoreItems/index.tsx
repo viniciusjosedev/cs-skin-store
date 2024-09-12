@@ -6,7 +6,7 @@ import ItemCard from "../ItemCard";
 import { Spinner } from "@chakra-ui/react";
 
 const StoreItems = () => {
-	const { items, lastItemRef, hasMore } = useContext(StoreContext);
+	const { items, lastItemRef, hasMore, loading } = useContext(StoreContext);
 
 	return (
 		<section
@@ -19,7 +19,7 @@ const StoreItems = () => {
 					<ItemCard key={item.id} item={item} lastItemRef={items.length -1 === index ? lastItemRef : null} />
 				))}
 			</div>
-			{hasMore && <Spinner color="orange" w={10} h={10} marginTop={'10px'} />}
+			{(hasMore || loading) && <Spinner color="orange" w={10} h={10} marginTop={'10px'} />}
 		</section>
 	)
 };
