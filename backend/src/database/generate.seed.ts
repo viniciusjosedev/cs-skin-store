@@ -46,11 +46,14 @@ export class GenerateSeed {
   constructor(private readonly prisma: PrismaClient) {}
 
   async run() {
+    log.info('Seed generating');
     await this.prisma.item.deleteMany();
 
     const filePath = path.resolve(__dirname, '../../mock-items.json');
 
-    const items = JSON.parse(await fs.readFile(filePath, 'utf-8')) as Item[];
+    const items = (
+      JSON.parse(await fs.readFile(filePath, 'utf-8')) as Item[]
+    ).filter((item) => item.max_float || item.min_float);
 
     await this.prisma.item.createMany({
       data: items.map((item) => ({
