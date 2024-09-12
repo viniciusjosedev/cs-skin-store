@@ -15,9 +15,12 @@ export class ItemsController {
       }),
     )
     query: ItemsQueryDto,
-  ): Promise<Item[]> {
-    const items = await this.ItemsService.getFilteredItems(query);
+  ): Promise<{ hasMore: boolean; items: Item[] }> {
+    const { hasMore, items } = await this.ItemsService.getFilteredItems(query);
 
-    return items;
+    return {
+      hasMore,
+      items,
+    };
   }
 }

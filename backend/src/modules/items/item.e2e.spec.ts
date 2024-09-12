@@ -41,8 +41,8 @@ describe('ItemsController (e2e)', () => {
     });
 
     expect(res.status).toBe(200);
-    expect(res.body).toHaveLength(1);
-    expect(res.body[0].name).toContain('P250 | Inferno');
+    expect(res.body.items).toHaveLength(1);
+    expect(res.body.items[0].name).toContain('P250 | Inferno');
   });
 
   it('should filter items by priceLower and order by price descending', async () => {
@@ -53,8 +53,8 @@ describe('ItemsController (e2e)', () => {
     });
 
     expect(res.status).toBe(200);
-    expect(res.body).toHaveLength(2);
-    expect(res.body[0].price).toBe(500);
+    expect(res.body.items).toHaveLength(2);
+    expect(res.body.items[0].price).toBe(500);
   });
 
   it('should filter items by priceLower and order by price ascending with default order direction', async () => {
@@ -64,8 +64,8 @@ describe('ItemsController (e2e)', () => {
     });
 
     expect(res.status).toBe(200);
-    expect(res.body).toHaveLength(2);
-    expect(res.body[0].price).toBe(2);
+    expect(res.body.items).toHaveLength(2);
+    expect(res.body.items[0].price).toBe(2);
   });
 
   it('should filter items by priceLower and priceUpper', async () => {
@@ -75,8 +75,8 @@ describe('ItemsController (e2e)', () => {
     });
 
     expect(res.status).toBe(200);
-    expect(res.body).toHaveLength(1);
-    expect(res.body[0].price).toBe(2);
+    expect(res.body.items).toHaveLength(1);
+    expect(res.body.items[0].price).toBe(2);
   });
 
   it('should filter items by float range', async () => {
@@ -86,8 +86,8 @@ describe('ItemsController (e2e)', () => {
     });
 
     expect(res.status).toBe(200);
-    expect(res.body).toHaveLength(1);
-    expect(res.body[0].float).toBe('0.68');
+    expect(res.body.items).toHaveLength(1);
+    expect(res.body.items[0].float).toBe('0.68');
   });
 
   it('should filter items by minimum float value', async () => {
@@ -96,8 +96,8 @@ describe('ItemsController (e2e)', () => {
     });
 
     expect(res.status).toBe(200);
-    expect(res.body).toHaveLength(1);
-    expect(res.body[0].float).toBe('0.68');
+    expect(res.body.items).toHaveLength(1);
+    expect(res.body.items[0].float).toBe('0.68');
   });
 
   it('should filter items by maximum float value', async () => {
@@ -106,8 +106,8 @@ describe('ItemsController (e2e)', () => {
     });
 
     expect(res.status).toBe(200);
-    expect(res.body).toHaveLength(2);
-    expect(res.body[0].float).toBe('0.68');
+    expect(res.body.items).toHaveLength(2);
+    expect(res.body.items[0].float).toBe('0.68');
   });
 
   it('should filter items by exact float value', async () => {
@@ -117,8 +117,8 @@ describe('ItemsController (e2e)', () => {
     });
 
     expect(res.status).toBe(200);
-    expect(res.body).toHaveLength(1);
-    expect(res.body[0].float).toBe('1');
+    expect(res.body.items).toHaveLength(1);
+    expect(res.body.items[0].float).toBe('1');
   });
 
   it('should apply pagination and return the correct page', async () => {
@@ -127,7 +127,7 @@ describe('ItemsController (e2e)', () => {
     });
 
     expect(res.status).toBe(200);
-    expect(res.body).toHaveLength(2);
+    expect(res.body.items).toHaveLength(2);
   });
 
   it('should filter items by category only', async () => {
@@ -136,14 +136,14 @@ describe('ItemsController (e2e)', () => {
     });
 
     expect(res.status).toBe(200);
-    expect(res.body).toHaveLength(2);
-    expect(res.body[0].category).toBe('Pistols');
+    expect(res.body.items).toHaveLength(2);
+    expect(res.body.items[0].category).toBe('Pistols');
   });
 
   it('should return all items when no filters are applied', async () => {
     const res = await request(app.getHttpServer()).get('/items');
 
     expect(res.status).toBe(200);
-    expect(res.body).toHaveLength(2);
+    expect(res.body.items).toHaveLength(2);
   });
 });

@@ -7,7 +7,9 @@ import { ItemsQueryDto } from '@/modules/items/items.query.dto';
 export class ItemsService {
   constructor(private readonly DatabaseService: DatabaseService) {}
 
-  async getFilteredItems(filters: ItemsQueryDto): Promise<Item[]> {
+  async getFilteredItems(
+    filters: ItemsQueryDto,
+  ): Promise<{ items: Item[]; hasMore: boolean }> {
     const where: Prisma.ItemWhereInput = {};
     const orderBy: Prisma.ItemOrderByWithAggregationInput = {};
     const take = 200;
@@ -58,11 +60,20 @@ export class ItemsService {
       orderBy[filters.orderColumn] = filters.orderDirection || 'asc';
     }
 
-    return this.DatabaseService.item.findMany({
-      where: where,
-      orderBy,
-      take,
-      skip,
-    });
+    const [count, items] = await Promise.all([
+      this.DatabaseService.item.count({
+        where: where,
+      }),
+      this.DatabaseService.item.findMany({
+        where: where,
+        orderBy,
+        take,
+        skip,
+      }),
+    ]);
+
+    const hasMore = count > take + skip;
+
+    return { items, hasMore };
   }
 }
