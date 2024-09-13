@@ -1,6 +1,8 @@
 # CS SKIN STORE
 
-Este projeto é um monolito para uma aplicação full-stack que representa uma página de compras de skins de CS (Counter-Strike). Foi feito o deploy em uma instância da AWS para acesso rápido, está disponível [https://cs-skins-store.vinicorp.online/store](https://cs-skins-store.vinicorp.online/store).
+![image](https://github.com/user-attachments/assets/be222eff-9e14-40fb-9c76-7e817525e216)
+
+Este projeto é um monolito para uma aplicação full-stack que representa uma página de compras de skins de CS (Counter-Strike). Foi feito o deploy em uma instância da AWS para acesso rápido, está disponível em [https://cs-skins-store.vinicorp.online/store](https://cs-skins-store.vinicorp.online/store).
 
 ## Destaques e decisões técnicas
 
@@ -77,7 +79,7 @@ Para iniciar a aplicação com Docker, certifique-se de que o Docker está insta
 
 Para executar os testes de integração, siga estes passos:
 
-1. Verifique as variáveis de ambiente para testes (`.env.example`) no diretório `/backend`.
+1. Crie o arquivo `.env.test` em `/backend` e coloque a variável de ambiente para prosseguir com os testes.
 
     ```sh
     DATABASE_URL=
