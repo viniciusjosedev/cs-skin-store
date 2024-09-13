@@ -48,7 +48,7 @@ export const StoreProvider = ({ children }: React.PropsWithChildren) => {
 
 	const handleFilersDTO = useCallback((params: Filters & { pageNumber: number }) => {
 		return {
-			name: params.name,
+			name: params.name.trim(),
 			floatUpper: params.float_min ? parseFloat(params.float_min) : undefined,
 			floatLower: params.float_max ? parseFloat(params.float_max) : undefined,
 			priceUpper: params.price_min ? parseFloat(params.price_min) : undefined,
