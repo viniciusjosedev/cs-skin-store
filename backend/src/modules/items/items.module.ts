@@ -1,4 +1,3 @@
-// src/modules/items/items.module.ts
 import { Module } from '@nestjs/common';
 import { DatabaseService } from '@/database/database.service';
 import { ItemsService } from '@/modules/items/items.service';
