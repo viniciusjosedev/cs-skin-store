@@ -68,6 +68,8 @@ Para iniciar a aplicação com Docker, certifique-se de que o Docker está insta
     npm run up
     ```
 
+	OBS: Caso o container do frontend dê algum erro de falta de depêndencias na hora da inicialização do next, execute "npm install" em /frontend e em seguida suba o container novamente com o comando "npm run up".
+
 4. Caso inicie o backend como desenvolvimento (`NODE_ENV=dev`), é necessário rodar os seeds com o Prisma. Para isso, entre no container do backend e rode o comando:
 
     ```sh
