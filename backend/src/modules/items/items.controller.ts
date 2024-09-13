@@ -2,7 +2,9 @@ import { Controller, Get, Query, ValidationPipe } from '@nestjs/common';
 import { ItemsQueryDto } from '@/modules/items/items.query.dto';
 import { ItemsService } from '@/modules/items/items.service';
 import { Item } from '@prisma/client';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('items')
 @Controller()
 export class ItemsController {
   constructor(private readonly ItemsService: ItemsService) {}
