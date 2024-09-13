@@ -1,6 +1,6 @@
 # CS SKIN STORE
 
-Este projeto é um monolito para uma aplicação full-stack que representa uma página de compras de skins de CS (Counter-Strike). Foi feito o deploy em uma instância da AWS para acesso rápido, está disponível [https://cs-skins-store.vinicorp.online/store](https://cs-skins-store.vinicorp.online/store).
+Este projeto é um monolito para uma aplicação full-stack que representa uma página de compras de skins de CS (Counter-Strike). Foi feito o deploy em uma instância da AWS para acesso rápido, está disponível em [https://cs-skins-store.vinicorp.online/store](https://cs-skins-store.vinicorp.online/store).
 
 ## Destaques e decisões técnicas
 
