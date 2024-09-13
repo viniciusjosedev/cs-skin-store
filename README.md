@@ -77,7 +77,26 @@ Para iniciar a aplicação com Docker, certifique-se de que o Docker está insta
 
 Para executar os testes de integração, é necessário seguir os seguintes passos:
 
-1. **Entre no container do backend:**
+1. Vefique as envs de teste (.env.example) no diretório /backend.
+
+    ```sh
+        DATABASE_URL=
+    ```
+    É ncessario ser a mesma URL da credencial em produção, mudando apenas o nome do banco de dados.
+    
+    Se a url na .env for:
+
+    ```sh
+        DATABASE_URL="mongodb://cs-skin-store-mongo:27017/skinStore?replicaSet=rs0&retryWrites=true&w=majority&directConnection=true"
+    ```
+
+    Então a url na .env.test deverá apenas mudar o nome do banco, exemplo:
+    
+    ```sh
+        DATABASE_URL="mongodb://cs-skin-store-mongo:27017/skinStoreTest?replicaSet=rs0&retryWrites=true&w=majority&directConnection=true"
+    ```
+
+2. **Entre no container do backend:**
 
     ```sh
     docker exec -it cs-skin-store-app sh
