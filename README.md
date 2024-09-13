@@ -1,71 +1,92 @@
 # CS SKIN STORE
 
-Este projeto é um monolito para uma aplicação full-stack na qual se consiste em representar uma pagina de compras de skins de CS (Counter-Strike).
+Este projeto é um monolito para uma aplicação full-stack que representa uma página de compras de skins de CS (Counter-Strike).
 
-## Destaques
+## Destaques e decisões técnicas
 
-- Nest.js com uso de prisma ao lado de um banco de dados não relacional (MongoDB).
-- Testes de integração juntamente com documentação de rotas utilizando o Swagger.
-- Página web feita com o uso do Next.js utilizando a lib de estilos pré-prontos ChakraUI.
-- Todos os serviços (Frontend, Backend e Banco de dados) estão Dockerizados.
+- **Nest.js** com uso de **Prisma** ao lado de um banco de dados não relacional (**MongoDB**). O MongoDB utilizado é a versão LTS para maior estabilidade.
+- Testes de integração juntamente com documentação de rotas utilizando o **Swagger**.
+- Página web feita com o uso do **Next.js** versão 14, utilizando a biblioteca de estilos pré-prontos **ChakraUI** e com a utilização de componentes tanto client-side quanto server-side.
+- Todos os serviços (Frontend, Backend e Banco de Dados) estão dockerizados.
 
-## Getting Started
+## Primeiros passos
 
-To run this project, follow these steps:
+Para rodar o projeto, siga estes passos:
 
-1. Clone the repository:
+### Docker
 
-    ```sh
-    git clone https://github.com/your-username/your-repository.git
-    cd your-repository
-    ```
+Para iniciar a aplicação com Docker, certifique-se de que o Docker está instalado juntamente com o Docker Compose.
 
-2. Install the dependencies:
+1. **Clone o repositório:**
 
     ```sh
-    npm install
+    git clone git@github.com:viniciusjosedev/cs-skin-store.git
+    cd cs-skin-store
     ```
 
-3. Setup Prisma:
+2. **Configure suas credenciais:**
+
+    Crie um arquivo `.env` em `/backend` com o seguinte conteúdo para o backend (abaixo é apenas um exemplo, fique à vontade para mudar suas portas):
 
     ```sh
-    npx prisma migrate dev --name init
-    npx prisma generate
+    # ENVIRONMENT, DEV OR PROD
+    NODE_ENV=dev
+    NODE_PORT=1010
+
+    # DB CONFIG
+    MONGO_PORT=27017
+    DATABASE_URL="mongodb://cs-skin-store-mongo:27017/skinStore?replicaSet=rs0&retryWrites=true&w=majority&directConnection=true"
+
+    # FRONTEND CONFIG
+    FRONTEND_URL=http://localhost:3000
     ```
 
-4. Run the application:
+    E para o frontend, crie um arquivo `.env` dentro de `/frontend` (abaixo é apenas um exemplo, fique à vontade para mudar suas portas):
+
+    **OBS:** A porta da URL do backend deve ser a mesma que está configurada na `.env` do `/backend`.
 
     ```sh
-    npm run start:dev
+    NODE_ENV=dev
+
+    NEXT_PORT=3000
+
+    NEXT_PUBLIC_BACKEND_URL=http://localhost:1010
     ```
 
-Then, you will have a NestJS application running with pagination logic.
+3. Com as credenciais feitas, inicie o Docker em ambos os diretórios.
 
-## Example Usage
+    Em um terminal, execute:
+    ```sh
+    cd frontend
+    npm run up
+    ```
+    Em outro terminal, execute:
+    ```sh
+    cd backend
+    npm run up
+    ```
 
-To fetch paginated data, you can make a request to the `/items` endpoint:
+4. Caso inicie o backend como desenvolvimento (`NODE_ENV=dev`), é necessário rodar os seeds com o Prisma. Para isso, entre no container do backend e rode o comando:
 
+    ```sh
+    docker exec -it cs-skin-store-app sh
+    npm run prisma:seed
+    ```
 
-This will fetch the first page of items with a size of 10 per page. The response will include a flag indicating if more items are available beyond the current page.
+## Execução dos Testes
 
-## Key Files and Structure
+Para executar os testes de integração, é necessário seguir os seguintes passos:
 
-- **`items.controller.ts`**: Handles incoming HTTP requests and calls the appropriate service methods.
-- **`items.service.ts`**: Contains the business logic for fetching paginated data and checking for more items.
-- **`prisma.service.ts`**: Provides a Prisma client instance for interacting with the database.
-- **`dto/query.dto.ts`**: Defines the Data Transfer Object for validating query parameters.
+1. **Entre no container do backend:**
 
-## Useful Commands
+    ```sh
+    docker exec -it cs-skin-store-app sh
+    ```
 
-```sh
-# To run in dev mode
-npm run start:dev
+2. **Execute os testes:**
 
-# To format the code
-npm run format
+    ```sh
+    npm run test
+    ```
 
-# To run lint checks
-npm run lint
-
-# To build the project
-npm run build
+Certifique-se de que o container do backend está rodando corretamente antes de executar os testes.
