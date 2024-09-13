@@ -79,7 +79,7 @@ Para iniciar a aplicação com Docker, certifique-se de que o Docker está insta
 
 Para executar os testes de integração, siga estes passos:
 
-1. Verifique as variáveis de ambiente para testes (`.env.example`) no diretório `/backend`.
+1. Crie o arquivo `.env.test` em `/backend` e coloque a variável de ambiente para prosseguir com os testes.
 
     ```sh
     DATABASE_URL=
