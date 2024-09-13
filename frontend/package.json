@@ -5,7 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "npm run build && next start",
+		"up": "docker compose up -d --build --force-recreate && npm run logs",
+		"down": "docker compose down",
+		"logs": "docker compose logs -f cs-skin-store-front",
     "lint": "next lint"
   },
   "dependencies": {

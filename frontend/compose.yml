@@ -1,0 +1,17 @@
+networks:
+  service:
+    driver: bridge
+
+services:
+  cs-skin-store-front:
+    build:
+      context: .
+      dockerfile: dockerfile-front
+      target: ${NODE_ENV}
+    container_name: cs-skin-store-front
+    networks:
+      - service
+    volumes:
+      - .:/app
+    ports:
+      - "${NEXT_PORT}:3000"
